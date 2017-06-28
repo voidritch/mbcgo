@@ -1,12 +1,15 @@
 package main
 
 import (
-	"fmt"
+        "fmt"
+	"http"
 	"mbcgo/config"
 )
 
 func main() {
-	conf := new(config.ServerConfig)
-	conf.Load()
-	fmt.Println(conf)
+        fs := http.FileServer(http.Dir("static"))
+        http.Handle("/", fs)
+
+        log.Println("Listening...")
+        http.ListenAndServe(":8080", nil)
 }
